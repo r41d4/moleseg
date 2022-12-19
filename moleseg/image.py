@@ -1,10 +1,11 @@
 import numpy as np
 import cv2
 
+from numpy.typing import NDArray
 from skimage.filters import gaussian
 
 
-def lut_enhance(image):
+def lut_enhance(image: NDArray) -> NDArray:
     xp = [0, 64, 128, 192, 255]
     fp = [0, 16, 128, 240, 255]
     x = np.arange(256)
@@ -14,11 +15,11 @@ def lut_enhance(image):
 
 
 def preprocess_image(
-    image,
-    increase_contrast=True,
-    gaussian_kernel_size=5,
-    gaussian_sigma=1.0,
-):
+    image: NDArray,
+    increase_contrast: bool = True,
+    gaussian_kernel_size: int = 5,
+    gaussian_sigma: float = 1.0,
+) -> NDArray:
     preprocessed_image = image.copy()
 
     if increase_contrast:
@@ -34,7 +35,7 @@ def preprocess_image(
     return preprocessed_image
 
 
-def create_mask(image, object_polygon):
+def create_mask(image: NDArray, object_polygon: NDArray) -> NDArray:
     mask = np.zeros(image.shape[:2])
     if object_polygon is not None:
         cv2.fillPoly(mask, [object_polygon], color=255)

@@ -1,10 +1,18 @@
 import numpy as np
 import cv2
 
+from typing import Union, Sequence
+from numpy.typing import NDArray
+
 
 def overlay_object(
-    image, object_polygon, border_color, border_width, fill, fill_alpha=0.5
-):
+    image: NDArray,
+    object_polygon: NDArray,
+    border_color: Union[Sequence[int], NDArray],
+    border_width: int,
+    fill: bool,
+    fill_alpha: float = 0.5,
+) -> NDArray:
     image_overlayed = image.copy()
     if object_polygon is not None:
         if fill:

@@ -1,8 +1,12 @@
 import numpy as np
 import cv2
 
+from numpy.typing import NDArray
 
-def kmeans_color_quantization(image, cluster_count, round_count):
+
+def kmeans_color_quantization(
+    image: NDArray, cluster_count: int, round_count: int
+) -> NDArray:
     samples = image.reshape(-1, 3).astype(np.float32)
     _, labels, centers = cv2.kmeans(
         samples,
@@ -17,7 +21,9 @@ def kmeans_color_quantization(image, cluster_count, round_count):
     return res.reshape(image.shape)
 
 
-def quantize_image(image, cluster_count, round_count, fill_border):
+def quantize_image(
+    image: NDArray, cluster_count: int, round_count: int, fill_border: bool
+) -> NDArray:
     quantized_image = kmeans_color_quantization(image, cluster_count, round_count)
     if fill_border:
         original_quantized_image = quantized_image.copy()
@@ -41,7 +47,7 @@ def quantize_image(image, cluster_count, round_count, fill_border):
     return quantized_image
 
 
-def extract_mole_polygon(image, convex_hull):
+def extract_mole_polygon(image: NDArray, convex_hull: bool) -> NDArray:
     def choose_polygon(polygons):
         for polygon in polygons:
             if len(polygon) < 3 and not cv2.isContourConvex(polygon):
