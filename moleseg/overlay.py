@@ -13,6 +13,32 @@ def overlay_object(
     fill: bool,
     fill_alpha: float = 0.5,
 ) -> NDArray:
+    """
+    Draw a polygon over an input image.
+
+    Returns an overlayed images.
+
+    Parameters
+    ----------
+    image : ndarray
+        Two-dimensional array with image data.
+
+    object_polygon: ndarray
+        Array containing x, y coordinates of the vertices of an object polygon.
+
+    border_color: array-like of int or ndarray
+        Array of RGB color values for the border of an overlayed polygon.
+        Shifted values of this vector are used for the polygon fill.
+
+    border_width : int
+        Width of the border of an overlayed polygon.
+
+    fill : bool
+        Flag for filling the polygon within its borders.
+
+    fill_alpha : float, optional, default 0.5
+        Alpha value for the fill color of the overlayed polygon.
+    """
     image_overlayed = image.copy()
     if object_polygon is not None:
         if fill:

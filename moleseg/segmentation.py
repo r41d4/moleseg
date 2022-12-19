@@ -7,6 +7,25 @@ from numpy.typing import NDArray
 def kmeans_color_quantization(
     image: NDArray, cluster_count: int, round_count: int
 ) -> NDArray:
+    """
+    Perform color quantization on the input image using k-means clustering.
+
+    Returns a quantized image.
+
+    Parameters
+    ----------
+    image : ndarray
+        Two-dimensional array with image data.
+    cluster_count : int
+        The number of clusters to use in the k-means algorithm.
+    round_count : int
+        The number of times the k-means algorithm will be run with different initializations.
+
+    Returns
+    -------
+    ndarray
+        Two-dimensional array with quantized image data.
+    """
     samples = image.reshape(-1, 3).astype(np.float32)
     _, labels, centers = cv2.kmeans(
         samples,
@@ -24,6 +43,24 @@ def kmeans_color_quantization(
 def quantize_image(
     image: NDArray, cluster_count: int, round_count: int, fill_border: bool
 ) -> NDArray:
+    """
+    Perform color quantization on the input image and optionally fill
+    the border of the image with a solid color.
+
+    Parameters
+    ----------
+    image : ndarray
+        Two-dimensional array with image data.
+    cluster_count : int
+        The number of clusters to use in the k-means algorithm.
+    round_count : int
+        The number of times the k-means algorithm will be run with different initializations.
+
+    Returns a quantized image with optionally filled border.
+    -------
+    ndarray
+        Two-dimensional array with quantized image data.
+    """
     quantized_image = kmeans_color_quantization(image, cluster_count, round_count)
     if fill_border:
         original_quantized_image = quantized_image.copy()
@@ -47,7 +84,25 @@ def quantize_image(
     return quantized_image
 
 
-def extract_mole_polygon(image: NDArray, convex_hull: bool) -> NDArray:
+def extract_mole_polygon(image: NDArray, convex_hull: bool = False) -> NDArray:
+    """
+    Extract the polygon representing a mole in the input image.
+
+    Returns an array containing x, y coordinates of the vertices of an object polygon.
+
+    Parameters
+    ----------
+    image : ndarray
+        Two-dimensional array with image data.
+    convex_hull : bool, optional, default False
+        Flag for returning the convex hull of the polygon instead of the original polygon.
+
+    Returns
+    -------
+    ndarray
+        Array containing x, y coordinates of the vertices of an object polygon.
+    """
+
     def choose_polygon(polygons):
         for polygon in polygons:
             if len(polygon) < 3 and not cv2.isContourConvex(polygon):
