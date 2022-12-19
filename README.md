@@ -1,6 +1,6 @@
 # MoleSeg
 
-**MoleSeg** is a Python module providing tools skin mole image segmentation.
+**MoleSeg** is a Python module providing tools for skin mole image segmentation.
 
 The current method was validated on [ISIC 2016 challenge dataset](https://challenge.isic-archive.com/landing/2016/).
 
